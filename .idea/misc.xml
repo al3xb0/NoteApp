@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/NoteApp/app/src/main/res/layout/activity_create_password.xml" value="0.309375" />
+        <entry key="..\:/NoteApp/app/src/main/res/layout/activity_enter_password.xml" value="0.309375" />
         <entry key="..\:/NoteApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/NoteApp/app/src/main/res/layout/activity_splash.xml" value="0.309375" />
       </map>
     </option>
   </component>
