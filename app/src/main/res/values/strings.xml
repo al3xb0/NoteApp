@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NoteApp</string>
+    <string name="note_title">Note Title</string>
+    <string name="write_in_me">Write in me!</string>
+    <string name="save_note">Save note</string>
+    <string name="notes">Notes:</string>
 </resources>
