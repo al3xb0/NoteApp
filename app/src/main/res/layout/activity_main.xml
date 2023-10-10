@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#F0C896"
+    android:background="#F4F4F4"
     tools:context=".MainActivity">
 
     <Button
@@ -19,8 +19,12 @@
         android:id="@+id/titleEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_note_bg"
         android:hint="Note Title"
-        android:layout_marginTop="8dp"/>
+        android:minHeight="48dp"
+        android:paddingStart="4dp"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/contentEditText"
@@ -29,7 +33,10 @@
         android:layout_marginTop="8dp"
         android:inputType="textMultiLine"
         android:minLines="4"
-        android:hint="Write in me!" />
+        android:paddingStart="4dp"
+        android:background="@drawable/edit_note_bg"
+        android:hint="Write in me!"
+        android:autofillHints="" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,13 +55,16 @@
         android:id="@+id/notesScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/notesContainer"
-        android:orientation="vertical"/>
+        android:layout_weight="1"
+        android:contentDescription="@string/app_name">
+
+        <LinearLayout
+            android:id="@+id/notesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
     </ScrollView>
+
 
 
 </LinearLayout>

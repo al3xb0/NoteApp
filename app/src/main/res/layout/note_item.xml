@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/note_bg"
+    android:padding="4dp">
+
+    <TextView
+        android:text="Note Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:paddingStart="4dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:id="@+id/titleTextView"/>
+
+    <TextView
+        android:text="Content Text"
+        android:textColor="@color/white"
+        android:paddingLeft="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contentTextView"
+        android:layout_marginTop="4dp"/>
+
+</LinearLayout>
