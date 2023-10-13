@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
             createNoteView(note);
             clearInputFields();
+
         }
     }
 
@@ -159,6 +160,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveRewrittenNote(note);
+
+                saveRewriteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        saveNote();
+                    }
+                });
             }
         });
 
