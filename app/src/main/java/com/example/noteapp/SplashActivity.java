@@ -18,14 +18,19 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         //load password
-        SharedPreferences settings = getSharedPreferences("PREPS", 0);
-        password = settings.getString("password", "");
+        SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(this);
+        String password = null;
+        if (settings != null) {
+            password = settings.getString("password", "");
+        }
+
+        String finalPassword = password;
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (password.equals("")){
+                if (finalPassword == null || finalPassword.equals("")){
                     //if no password exists
                     Intent intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
                     startActivity(intent);
