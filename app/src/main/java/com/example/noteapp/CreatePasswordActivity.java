@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CreatePasswordActivity extends AppCompatActivity {
 
     EditText editText1, editText2, editText3;
@@ -32,6 +35,8 @@ public class CreatePasswordActivity extends AppCompatActivity {
                 String text2 = editText2.getText().toString();
                 String secretKey = editText3.getText().toString();
 
+
+
                 if (text1.equals("") || text2.equals("")){
                     Toast.makeText(CreatePasswordActivity.this, "Password not entered", Toast.LENGTH_SHORT).show();
                 } else {
@@ -39,15 +44,23 @@ public class CreatePasswordActivity extends AppCompatActivity {
                         Toast.makeText(CreatePasswordActivity.this, "Enter secret word please", Toast.LENGTH_SHORT).show();
                     } else {
                         if(text1.equals(text2)) {
-                            SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(CreatePasswordActivity.this);
-                            SharedPreferences.Editor editor = settings.edit();
-                            editor.putString("password", text1);
-                            editor.putString("secretKey", secretKey);
-                            editor.apply();
+                            String regex = "^(?=\\S+$).{14,}$";
+                            Pattern pattern = Pattern.compile(regex);
+                            Matcher matcher = pattern.matcher(text1);
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            if (matcher.matches()) {
+                                SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(CreatePasswordActivity.this);
+                                SharedPreferences.Editor editor = settings.edit();
+                                editor.putString("password", text1);
+                                editor.putString("secretKey", secretKey);
+                                editor.apply();
+
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(CreatePasswordActivity.this, "Password don't match pattern", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Toast.makeText(CreatePasswordActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();
                         }
