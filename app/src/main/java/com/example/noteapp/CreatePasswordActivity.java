@@ -44,7 +44,7 @@ public class CreatePasswordActivity extends AppCompatActivity {
                         Toast.makeText(CreatePasswordActivity.this, "Enter secret word please", Toast.LENGTH_SHORT).show();
                     } else {
                         if(text1.equals(text2)) {
-                            String regex = "^(?=\\S+$).{14,}$";
+                            String regex = "^(?=\\S+$).{6,}$";
                             Pattern pattern = Pattern.compile(regex);
                             Matcher matcher = pattern.matcher(text1);
 
