@@ -17,7 +17,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PREFS_NAME = "NotePrefs";
     private static final String KEY_NOTE_COUNT = "NoteCount";
     private LinearLayout notesContainer;
     private List<Note> noteList;
@@ -26,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         notesContainer = findViewById(R.id.notesContainer);
         Button saveButton = findViewById(R.id.saveButton);
@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         displayNotes();
     }
 
+
+
+
     private void displayNotes() {
         for (Note note : noteList){
             createNoteView(note);
@@ -48,19 +51,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadNotesFromPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = EncryptedNotesHelper.getEncryptedNotes(this);
 
-        int noteCount =  sharedPreferences.getInt(KEY_NOTE_COUNT, 0);
+        int noteCount;
+        if (sharedPreferences != null) {
+            noteCount = sharedPreferences.getInt(KEY_NOTE_COUNT, 0);
+            for (int i = 0; i < noteCount; i++){
+                String title  = sharedPreferences.getString("note_title_" +i, "");
+                String content = sharedPreferences.getString("note_content_" +i, "");
 
-        for (int i = 0; i < noteCount; i++){
-            String title  = sharedPreferences.getString("note_title_" +i, "");
-            String content = sharedPreferences.getString("note_content_" +i, "");
+                Note note =  new Note();
+                note.setTitle(title);
+                note.setContent(content);
 
-            Note note =  new Note();
-            note.setTitle(title);
-            note.setContent(content);
-
-            noteList.add(note);
+                noteList.add(note);
+            }
         }
     }
 
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         String title = titleEditText.getText().toString();
         String content = contentEditText.getText().toString();
+
 
         if (!title.isEmpty() && !content.isEmpty()){
             Note note = new Note();
@@ -165,16 +171,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveNotesToPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putInt(KEY_NOTE_COUNT, noteList.size());
-        for (int i = 0; i < noteList.size(); i++){
-            Note note = noteList.get(i);
-            editor.putString("note_title_" + i, note.getTitle());
-            editor.putString("note_content_" + i, note.getContent());
+        SharedPreferences sharedPreferences = EncryptedNotesHelper.getEncryptedNotes(MainActivity.this);
+        SharedPreferences.Editor editor;
+        if (sharedPreferences != null) {
+            editor = sharedPreferences.edit();
+            editor.putInt(KEY_NOTE_COUNT, noteList.size());
+            for (int i = 0; i < noteList.size(); i++){
+                Note note = noteList.get(i);
+                editor.putString("note_title_" + i, note.getTitle());
+                editor.putString("note_content_" + i, note.getContent());
+            }
+            editor.apply();
         }
-        editor.apply();
     }
 
     private void saveRewrittenNote(Note note) {

@@ -46,11 +46,12 @@ public class CreatePasswordActivity extends AppCompatActivity {
                         Matcher matcher = pattern.matcher(text1);
 
                         if (matcher.matches()) {
+                            String hashedPassword = PasswordHasher.hashPassword(text1);
                             SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(CreatePasswordActivity.this);
                             SharedPreferences.Editor editor;
                             if (settings != null) {
                                 editor = settings.edit();
-                                editor.putString("password", text1);
+                                editor.putString("password", hashedPassword);
                                 editor.putString("secretKey", secretKey);
                                 editor.apply();
                             }

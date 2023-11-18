@@ -35,7 +35,7 @@ public class EnterPasswordActivity extends AppCompatActivity {
         button.setOnClickListener(view -> {
             String text = editText.getText().toString();
 
-            if (text.equals(password)){
+            if (PasswordHasher.verifyPassword(text,password)){
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
