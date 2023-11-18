@@ -9,7 +9,6 @@ import android.os.Handler;
 
 public class SplashActivity extends AppCompatActivity {
 
-    String password;
 
 
     @Override
@@ -27,22 +26,18 @@ public class SplashActivity extends AppCompatActivity {
         String finalPassword = password;
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (finalPassword == null || finalPassword.equals("")){
-                    //if no password exists
-                    Intent intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    //if password exists
-                    Intent intent = new Intent(getApplicationContext(), EnterPasswordActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-
+        handler.postDelayed(() -> {
+            Intent intent;
+            if (finalPassword == null || finalPassword.equals("")){
+                //if no password exists
+                intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
+            } else {
+                //if password exists
+                intent = new Intent(getApplicationContext(), EnterPasswordActivity.class);
             }
+            startActivity(intent);
+            finish();
+
         }, 2000);
     }
 }

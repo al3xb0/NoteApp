@@ -1,14 +1,13 @@
 package com.example.noteapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,45 +27,46 @@ public class CreatePasswordActivity extends AppCompatActivity {
         editText3 = (EditText) findViewById(R.id.editTextSecretKey);
         button = (Button) findViewById(R.id.buttonConfirm);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text1 = editText1.getText().toString();
-                String text2 = editText2.getText().toString();
-                String secretKey = editText3.getText().toString();
+        button.setOnClickListener(view -> {
+            String text1 = editText1.getText().toString();
+            String text2 = editText2.getText().toString();
+            String secretKey = editText3.getText().toString();
 
 
 
-                if (text1.equals("") || text2.equals("")){
-                    Toast.makeText(CreatePasswordActivity.this, "Password not entered", Toast.LENGTH_SHORT).show();
+            if (text1.equals("") || text2.equals("")){
+                Toast.makeText(CreatePasswordActivity.this, "Password not entered", Toast.LENGTH_SHORT).show();
+            } else {
+                if (secretKey.equals("")){
+                    Toast.makeText(CreatePasswordActivity.this, "Enter secret word please", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (secretKey.equals("")){
-                        Toast.makeText(CreatePasswordActivity.this, "Enter secret word please", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if(text1.equals(text2)) {
-                            String regex = "^(?=\\S+$).{6,}$";
-                            Pattern pattern = Pattern.compile(regex);
-                            Matcher matcher = pattern.matcher(text1);
+                    if(text1.equals(text2)) {
+                        String regex = "^(?=\\S+$).{6,}$";
+                        Pattern pattern = Pattern.compile(regex);
+                        Matcher matcher = pattern.matcher(text1);
 
-                            if (matcher.matches()) {
-                                SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(CreatePasswordActivity.this);
-                                SharedPreferences.Editor editor = settings.edit();
+                        if (matcher.matches()) {
+                            SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(CreatePasswordActivity.this);
+                            SharedPreferences.Editor editor;
+                            if (settings != null) {
+                                editor = settings.edit();
                                 editor.putString("password", text1);
                                 editor.putString("secretKey", secretKey);
                                 editor.apply();
-
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(CreatePasswordActivity.this, "Password don't match pattern", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(CreatePasswordActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();
-                        }
-                    }
 
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(CreatePasswordActivity.this, "Password don't match pattern", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(CreatePasswordActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
     }

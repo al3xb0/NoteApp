@@ -1,9 +1,5 @@
 package com.example.noteapp;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,19 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         noteList = new ArrayList<>();
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveNote();
-            }
-        });
+        saveButton.setOnClickListener(view -> saveNote());
 
-        changePasswordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showChangePassword();
-            }
-        });
+        changePasswordButton.setOnClickListener(view -> showChangePassword());
 
         loadNotesFromPreferences();
         displayNotes();
@@ -112,12 +101,9 @@ public class MainActivity extends AppCompatActivity {
         titleTextView.setText(note.getTitle());
         contentTextView.setText(note.getContent());
 
-        noteView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                showDeleteDialog(note);
-                return true;
-            }
+        noteView.setOnLongClickListener(view -> {
+            showDeleteDialog(note);
+            return true;
         });
 
         notesContainer.addView(noteView);
@@ -128,18 +114,8 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit note?");
         builder.setMessage("Choose what you want.");
-        builder.setPositiveButton("Rewrite", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                rewriteNote(note);
-            }
-        });
-        builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                deleteNoteAndRefresh(note);
-            }
-        });
+        builder.setPositiveButton("Rewrite", (dialogInterface, i) -> rewriteNote(note));
+        builder.setNegativeButton("Delete", (dialogInterface, i) -> deleteNoteAndRefresh(note));
         builder.setNeutralButton("Cancel", null);
         builder.show();
     }
@@ -156,18 +132,10 @@ public class MainActivity extends AppCompatActivity {
         titleEditText.setText(title);
         contentEditText.setText(content);
 
-        saveRewriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveRewrittenNote(note);
+        saveRewriteButton.setOnClickListener(view -> {
+            saveRewrittenNote(note);
 
-                saveRewriteButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        saveNote();
-                    }
-                });
-            }
+            saveRewriteButton.setOnClickListener(view1 -> saveNote());
         });
 
     }
@@ -176,13 +144,10 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Change password?");
         builder.setMessage("Are you sure?");
-        builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        builder.setPositiveButton("Change", (dialogInterface, i) -> {
+            Intent intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
+            startActivity(intent);
+            finish();
         });
         builder.setNegativeButton("Cancel", null);
         builder.show();
