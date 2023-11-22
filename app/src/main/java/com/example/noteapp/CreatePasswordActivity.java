@@ -22,10 +22,10 @@ public class CreatePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_password);
 
-        editText1 = (EditText) findViewById(R.id.editTextTextPassword1);
-        editText2 = (EditText) findViewById(R.id.editTextTextPassword2);
-        editText3 = (EditText) findViewById(R.id.editTextSecretKey);
-        button = (Button) findViewById(R.id.buttonConfirm);
+        editText1 = findViewById(R.id.editTextTextPassword1);
+        editText2 = findViewById(R.id.editTextTextPassword2);
+        editText3 = findViewById(R.id.editTextSecretKey);
+        button = findViewById(R.id.buttonConfirm);
 
         button.setOnClickListener(view -> {
             String text1 = editText1.getText().toString();
@@ -41,23 +41,24 @@ public class CreatePasswordActivity extends AppCompatActivity {
                     Toast.makeText(CreatePasswordActivity.this, "Enter secret word please", Toast.LENGTH_SHORT).show();
                 } else {
                     if(text1.equals(text2)) {
-                        String regex = "^(?=\\S+$).{6,}$";
+                        String regex = "^(?=\\S+$).{6,36}$";
                         Pattern pattern = Pattern.compile(regex);
                         Matcher matcher = pattern.matcher(text1);
 
                         if (matcher.matches()) {
-                            String hashedPassword = PasswordHasher.hashPassword(text1);
+                            String hashedPassword = HasherHelper.hashFunction(text1);
+                            String hashedSecretKey = HasherHelper.hashFunction(secretKey);
                             SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(CreatePasswordActivity.this);
                             SharedPreferences.Editor editor;
                             if (settings != null) {
                                 editor = settings.edit();
                                 editor.putString("password", hashedPassword);
-                                editor.putString("secretKey", secretKey);
+                                editor.putString("secretKey", hashedSecretKey);
                                 editor.apply();
                             }
 
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), EnterPasswordActivity.class);
                             startActivity(intent);
                             finish();
                         } else {

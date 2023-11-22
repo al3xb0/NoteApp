@@ -4,9 +4,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class PasswordHasher {
+public class HasherHelper {
 
-    public static String hashPassword(String password) {
+    public static String hashFunction(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
@@ -23,8 +23,8 @@ public class PasswordHasher {
         }
     }
 
-    public static boolean verifyPassword(String enteredPassword, String storedHashedPassword) {
-        String enteredPasswordHash = hashPassword(enteredPassword);
+    public static boolean verifyHash(String enteredPassword, String storedHashedPassword) {
+        String enteredPasswordHash = hashFunction(enteredPassword);
         return enteredPasswordHash != null && enteredPasswordHash.equals(storedHashedPassword);
     }
 }

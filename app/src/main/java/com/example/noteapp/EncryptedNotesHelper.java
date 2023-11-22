@@ -10,7 +10,7 @@ public class EncryptedNotesHelper {
         try {
             String masterKeyAlias =  MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
             return EncryptedSharedPreferences.create(
-                    "ENCRYPTEDNOTES",
+                    "ENCRYPTEDPFREFS",
                     masterKeyAlias,
                     context,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,

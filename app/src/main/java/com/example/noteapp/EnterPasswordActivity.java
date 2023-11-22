@@ -10,6 +10,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class EnterPasswordActivity extends AppCompatActivity {
 
     EditText editText;
@@ -28,19 +31,25 @@ public class EnterPasswordActivity extends AppCompatActivity {
             password = settings.getString("password", "");
         }
 
-        editText = (EditText) findViewById(R.id.enterPassword);
-        button = (Button) findViewById(R.id.buttonEnter);
-        button2 = (Button) findViewById(R.id.buttonForgotPassword);
+        editText = findViewById(R.id.enterPassword);
+        button = findViewById(R.id.buttonEnter);
+        button2 = findViewById(R.id.buttonForgotPassword);
 
         button.setOnClickListener(view -> {
             String text = editText.getText().toString();
-
-            if (PasswordHasher.verifyPassword(text,password)){
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+            String regex = "^(?=\\S+$).{1,36}$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(text);
+            if (matcher.matches()){
+                if (HasherHelper.verifyHash(text,password)){
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(EnterPasswordActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(EnterPasswordActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EnterPasswordActivity.this, "Min 1 character, max 36", Toast.LENGTH_SHORT).show();
             }
         });
 

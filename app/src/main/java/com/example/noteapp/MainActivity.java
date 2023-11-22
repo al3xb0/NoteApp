@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         notesContainer = findViewById(R.id.notesContainer);
         Button saveButton = findViewById(R.id.saveButton);
         Button changePasswordButton = findViewById(R.id.changePassword);
+        Button logOutButton = findViewById(R.id.logOutButton);
 
         noteList = new ArrayList<>();
 
@@ -37,9 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
         changePasswordButton.setOnClickListener(view -> showChangePassword());
 
+        logOutButton.setOnClickListener(view -> showLogOut());
+
         loadNotesFromPreferences();
         displayNotes();
     }
+
 
 
 
@@ -123,6 +127,19 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Rewrite", (dialogInterface, i) -> rewriteNote(note));
         builder.setNegativeButton("Delete", (dialogInterface, i) -> deleteNoteAndRefresh(note));
         builder.setNeutralButton("Cancel", null);
+        builder.show();
+    }
+
+    private void showLogOut() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Do you want log out?");
+        builder.setMessage("Are you sure?");
+        builder.setPositiveButton("Log Out", (dialogInterface, i) -> {
+            Intent intent = new Intent(getApplicationContext(), EnterPasswordActivity.class);
+            startActivity(intent);
+            finish();
+        });
+        builder.setNegativeButton("Cancel", null);
         builder.show();
     }
 
