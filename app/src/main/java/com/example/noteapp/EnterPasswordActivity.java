@@ -41,7 +41,7 @@ public class EnterPasswordActivity extends AppCompatActivity {
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(text);
             if (matcher.matches()){
-                if (HasherHelper.verifyHash(text,password)){
+                if (HashHelper.verifyHash(text,password)){
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();

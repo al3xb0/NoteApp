@@ -33,7 +33,7 @@ public class RecoverPassword extends AppCompatActivity {
         button.setOnClickListener(view -> {
             String text = editText.getText().toString();
 
-            if (HasherHelper.verifyHash(text,secretKey)){
+            if (HashHelper.verifyHash(text,secretKey)){
                 Intent intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
                 startActivity(intent);
                 finish();

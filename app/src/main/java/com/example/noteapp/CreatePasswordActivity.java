@@ -46,8 +46,8 @@ public class CreatePasswordActivity extends AppCompatActivity {
                         Matcher matcher = pattern.matcher(text1);
 
                         if (matcher.matches()) {
-                            String hashedPassword = HasherHelper.hashFunction(text1);
-                            String hashedSecretKey = HasherHelper.hashFunction(secretKey);
+                            String hashedPassword = HashHelper.hashFunction(text1);
+                            String hashedSecretKey = HashHelper.hashFunction(secretKey);
                             SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(CreatePasswordActivity.this);
                             SharedPreferences.Editor editor;
                             if (settings != null) {
