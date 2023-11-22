@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Change password?");
         builder.setMessage("Are you sure?");
         builder.setPositiveButton("Change", (dialogInterface, i) -> {
-            Intent intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
             startActivity(intent);
             finish();
         });
