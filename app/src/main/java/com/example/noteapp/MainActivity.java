@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadNotesFromPreferences() {
-        SharedPreferences sharedPreferences = EncryptedNotesHelper.getEncryptedNotes(this);
+        SharedPreferences sharedPreferences = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(this);
 
         int noteCount;
         if (sharedPreferences != null) {
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveNotesToPreferences() {
-        SharedPreferences sharedPreferences = EncryptedNotesHelper.getEncryptedNotes(MainActivity.this);
+        SharedPreferences sharedPreferences = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(this);
         SharedPreferences.Editor editor;
         if (sharedPreferences != null) {
             editor = sharedPreferences.edit();
