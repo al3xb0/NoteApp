@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,6 +19,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
     Button buttonConfirm, buttonCancel;
 
     String password;
+
+    private int counter = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +55,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
                             String regex = "^(?=\\S+$).{6,36}$";
                             Pattern pattern = Pattern.compile(regex);
                             Matcher matcher = pattern.matcher(text1);
-                            Matcher matcher1 = pattern.matcher(oldPassword);
-                            if (matcher1.matches()) {
                                 if (matcher.matches()) {
                                     String hashedPassword = HashHelper.hashFunction(text1);
                                     SharedPreferences.Editor editor;
@@ -66,9 +67,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), EnterPasswordActivity.class);
                                     startActivity(intent);
                                     finish();
-                                } else {
-                                    Toast.makeText(ChangePasswordActivity.this, "Passwords don't match pattern", Toast.LENGTH_SHORT).show();
-                                }
                             } else {
                                 Toast.makeText(ChangePasswordActivity.this, "Active password don't match pattern", Toast.LENGTH_SHORT).show();
                             }
@@ -76,7 +74,14 @@ public class ChangePasswordActivity extends AppCompatActivity {
                             Toast.makeText(ChangePasswordActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(ChangePasswordActivity.this, "Wrong active password", Toast.LENGTH_SHORT).show();
+                        counter--;
+                        Toast.makeText(ChangePasswordActivity.this, "Wrong active password. Attempts left " + counter, Toast.LENGTH_SHORT).show();
+                        if (counter <= 0) {
+                            Toast.makeText(ChangePasswordActivity.this, "No more attempts", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), EnterPasswordActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
 
                 }
