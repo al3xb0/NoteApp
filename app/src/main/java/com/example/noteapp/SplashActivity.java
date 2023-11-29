@@ -29,15 +29,15 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(() -> {
             Intent intent;
             if (finalPassword == null || finalPassword.equals("")){
-                //if no password exists
+
                 intent = new Intent(getApplicationContext(), CreatePasswordActivity.class);
             } else {
-                //if password exists
+
                 intent = new Intent(getApplicationContext(), EnterPasswordActivity.class);
             }
             startActivity(intent);
             finish();
 
-        }, 2000);
+        }, 3000);
     }
 }

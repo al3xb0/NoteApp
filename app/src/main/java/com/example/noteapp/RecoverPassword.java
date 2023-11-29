@@ -21,7 +21,6 @@ public class RecoverPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recover_password);
 
-        //load secretKey
         SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(this);
         if (settings != null) {
             secretKey = settings.getString("secretKey", "");

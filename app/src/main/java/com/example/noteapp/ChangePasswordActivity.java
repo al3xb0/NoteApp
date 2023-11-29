@@ -38,7 +38,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             String text2 = editText2.getText().toString();
             String oldPassword = editText3.getText().toString();
 
-            //load password
             SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(this);
             if (settings != null) {
                 password = settings.getString("password", "");

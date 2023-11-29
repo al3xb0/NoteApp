@@ -11,12 +11,13 @@ public class HashHelper {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = digest.digest(string.getBytes(StandardCharsets.UTF_8));
 
-            // bytes to string
+
             StringBuilder hexStringBuilder = new StringBuilder();
             for (byte b : hashBytes) {
                 hexStringBuilder.append(String.format("%02x", b));
             }
             return hexStringBuilder.toString();
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return null;

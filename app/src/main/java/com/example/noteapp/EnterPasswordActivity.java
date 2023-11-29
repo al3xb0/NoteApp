@@ -28,7 +28,6 @@ public class EnterPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_password);
 
-        //load password
         SharedPreferences settings = EncryptedSharedPreferencesHelper.getEncryptedSharedPreferences(this);
         if (settings != null) {
             password = settings.getString("password", "");
