@@ -91,7 +91,6 @@ public class EnterPasswordActivity extends AppCompatActivity {
             builder.show();
         });
 
-
         executor = ContextCompat.getMainExecutor(this);
         biometricPrompt = new BiometricPrompt(EnterPasswordActivity.this,
                 executor, new BiometricPrompt.AuthenticationCallback() {

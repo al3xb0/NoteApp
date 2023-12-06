@@ -22,7 +22,7 @@ public class RecoverPassword extends AppCompatActivity {
     private BiometricPrompt.PromptInfo promptInfo;
 
     EditText editText;
-    Button button;
+    Button button, button2;
 
 
     String secretKey;
@@ -39,6 +39,7 @@ public class RecoverPassword extends AppCompatActivity {
 
         editText = findViewById(R.id.enterRecoverSecretWord);
         button = findViewById(R.id.buttonRecover);
+        button2 = findViewById(R.id.buttonCancel);
 
 
 
@@ -88,6 +89,12 @@ public class RecoverPassword extends AppCompatActivity {
             } else {
                 Toast.makeText(RecoverPassword.this, "Wrong secret word", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        button2.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), EnterPasswordActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 }
